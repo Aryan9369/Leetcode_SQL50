@@ -62,3 +62,17 @@ Output:
 
 # SOLUTION--------------------------------------------------------------------
 select e.name,b.bonus from Employee e left join Bonus b on e.empID=b.empID  where b.bonus < 1000 or b.bonus IS NULL;
+
+#Alternate solution--------------------------------------------------------------------
+-- Part 1: Employees with bonus < 1000
+SELECT e.name, b.bonus
+FROM Employee e
+JOIN Bonus b ON e.empId = b.empId
+WHERE b.bonus < 1000
+
+UNION
+
+-- Part 2: Employees without any bonus entry (null bonus)
+SELECT e.name, NULL as bonus
+FROM Employee e
+WHERE e.empId NOT IN (SELECT empId FROM Bonus);
