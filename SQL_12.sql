@@ -97,7 +97,8 @@ Output:
 +------------+--------------+--------------+----------------+
 
 #SOLUTION------------------------------------------------------------------------
-SELECT 
+1.Explicit CROSS JOIN
+ SELECT 
     s.student_id,
     s.student_name,
     sub.subject_name,
@@ -109,3 +110,27 @@ LEFT JOIN Examinations e
 GROUP BY s.student_id, s.student_name, sub.subject_name
 ORDER BY s.student_id, sub.subject_name;
 
+########################################################################################################################################################
+[      -- Explicit CROSS JOIN syntax (recommended)
+SELECT *
+FROM Students
+CROSS JOIN Subjects;
+
+-- Implicit CROSS JOIN using comma syntax
+SELECT *
+FROM Students, Subjects;]
+
+########################################################################################################################################################
+
+#ALTERNATE SOLUTION------------------------------------------------------------------------------------
+2. Implicit CROSS JOIN (comma join) 
+SELECT 
+    s.student_id,
+    s.student_name,
+    sub.subject_name,
+    COUNT(e.subject_name) AS attended_exams
+FROM Students s, Subjects sub
+LEFT JOIN Examinations e 
+    ON s.student_id = e.student_id AND sub.subject_name = e.subject_name
+GROUP BY s.student_id, s.student_name, sub.subject_name
+ORDER BY s.student_id, sub.subject_name;
